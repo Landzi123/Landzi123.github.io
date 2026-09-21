@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alexandre Lartigue – Portfolio</title>
+<meta name="description" content="Portfolio d'Alexandre Lartigue, étudiant ingénieur ESILV en Data Science et IA : projets de data, agents IA et automatisation n8n.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%82%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #ffffff;
+    --ink: #000000;
+    --text: #262626;
+    --muted: #5e5e5e;
+    --rule: #d8d8d8;
+    --hatch: #eeeeee;
+    --accent: #1d4ed8;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #141414;
+      --ink: #f4f4f4;
+      --text: #dcdcdc;
+      --muted: #a0a0a0;
+      --rule: #333333;
+      --hatch: #1e1e1e;
+      --accent: #8aa9ff;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #141414;
+    --ink: #f4f4f4;
+    --text: #dcdcdc;
+    --muted: #a0a0a0;
+    --rule: #333333;
+    --hatch: #1e1e1e;
+    --accent: #8aa9ff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html {
+    background: var(--paper);
+    scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 64px);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--text);
+    font-family: "Source Sans 3", "Source Sans Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  a { color: inherit; }
+  a:focus-visible, .btn:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  /* Barre de navigation */
+  .topbar {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 10;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+  }
+  .topbar .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 56px;
+  }
+  .topbar .brand { font-weight: 600; text-decoration: none; color: var(--ink); white-space: nowrap; }
+  .topbar nav { display: flex; gap: 22px; overflow-x: auto; }
+  .topbar nav a { text-decoration: none; color: var(--muted); white-space: nowrap; padding: 4px 0; }
+  .topbar nav a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 5px; }
+
+  /* En-tête */
+  .hero { padding: 72px 0 24px; }
+  .hero h1 {
+    margin: 0;
+    font-size: clamp(2.75rem, 9vw, 5rem);
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .hero h1 .surname { font-weight: 400; }
+  .hero .role {
+    margin: 18px 0 0;
+    font-size: clamp(1.2rem, 3.4vw, 1.75rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink);
+  }
+  .hero .intro { max-width: 62ch; margin: 28px 0 0; }
+  .hero .links { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 24px 0 0; padding: 0; list-style: none; }
+  .hero .links a { font-style: italic; }
+  .hero .links a:hover { color: var(--accent); }
+
+  /* Sections */
+  .section { padding: 56px 0 8px; }
+  .section-head { display: flex; align-items: center; gap: 20px; }
+  .bar { flex: none; width: 88px; height: 8px; background: var(--ink); }
+  .section-head h2 { margin: 0; font-size: 1.9rem; font-weight: 300; line-height: 1.2; color: var(--ink); }
+  .section-sub { margin: 10px 0 0; font-style: italic; font-weight: 300; color: var(--muted); }
+  .projects { margin-top: 28px; }
+  .empty { margin: 0; padding: 28px 0 40px; border-top: 1px solid var(--rule); color: var(--muted); font-style: italic; }
+
+  /* Projet */
+  .project { padding: 40px 0; border-top: 1px solid var(--rule); }
+  .figure { margin: 0 0 28px; border: 1px solid var(--rule); background: var(--hatch); }
+  .figure .zoom { display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: zoom-in; }
+  .figure img { display: block; width: 100%; height: auto; max-height: 560px; object-fit: contain; }
+  .figure figcaption { padding: 8px 14px; border-top: 1px solid var(--rule); background: var(--paper); color: var(--muted); font-size: .9rem; font-style: italic; }
+  .figure .ph {
+    width: 100%;
+    aspect-ratio: 16 / 6;
+    display: grid;
+    place-items: center;
+    color: var(--muted);
+    font-style: italic;
+    background: repeating-linear-gradient(135deg, transparent 0 10px, var(--rule) 10px 11px);
+  }
+  .project .body { max-width: 72ch; }
+  .project h3 { margin: 0; font-size: 1.6rem; line-height: 1.25; font-weight: 600; color: var(--ink); }
+  .project .summary { margin: 12px 0 0; max-width: 62ch; }
+  .project ul { margin: 16px 0 0; padding-left: 1.2em; max-width: 62ch; }
+  .project li { margin: 4px 0; }
+  .project .stack { margin: 18px 0 0; color: var(--muted); }
+  .project .stack .lab { font-weight: 600; color: var(--ink); margin-right: 8px; }
+  .project .actions { margin-top: 22px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--ink);
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color .15s, color .15s;
+  }
+  .btn:hover { background: transparent; color: var(--ink); }
+  .btn svg { width: 18px; height: 18px; fill: currentColor; flex: none; }
+  .btn[aria-disabled="true"] {
+    background: transparent;
+    color: var(--muted);
+    border: 1px dashed var(--muted);
+    cursor: default;
+  }
+
+  /* Image agrandie */
+  #lightbox { padding: 0; border: 1px solid var(--rule); background: var(--paper); color: var(--text); max-width: 96vw; max-height: 92vh; }
+  #lightbox::backdrop { background: rgba(0, 0, 0, .72); }
+  #lightbox .lb-bar { display: flex; justify-content: flex-end; padding: 10px 12px; border-bottom: 1px solid var(--rule); position: sticky; top: 0; background: var(--paper); }
+  #lightbox .lb-close { font: inherit; font-weight: 600; padding: 6px 14px; background: var(--ink); color: var(--paper); border: 1px solid var(--ink); cursor: pointer; }
+  #lightbox .lb-close:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  #lightbox .lb-scroll { overflow: auto; max-height: calc(92vh - 58px); max-width: 96vw; }
+  #lightbox img { display: block; width: auto; max-width: none; height: auto; }
+
+  /* Contact */
+  .contact-list { margin: 24px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--rule); }
+  .contact-list li { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+  .contact-list .lab { font-weight: 600; color: var(--ink); }
+  .contact-list a:hover { color: var(--accent); }
+  footer { padding: 48px 0 56px; color: var(--muted); font-size: .95rem; }
+
+  @media (max-width: 760px) {
+    .wrap { padding: 0 18px; }
+    .hero { padding-top: 48px; }
+    .project { padding: 32px 0; }
+    .bar { width: 48px; }
+    .section-head h2 { font-size: 1.6rem; }
+    .topbar nav { gap: 16px; }
+    .topbar .brand { display: none; }
+    .topbar .wrap { justify-content: flex-start; }
+    .contact-list li { grid-template-columns: 88px 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn { transition: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top">Alexandre Lartigue</a>
+    <nav id="nav" aria-label="Sections du portfolio"></nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <h1>Alexandre <span class="surname">Lartigue</span></h1>
+      <p class="role">Étudiant ingénieur – Spécialisation Data Science &amp; IA</p>
+      <p class="intro">
+        Étudiant en 4ème année à l'ESILV, je me spécialise dans la Data Science et l'Intelligence Artificielle.
+        Je construis des pipelines de données, des modèles prédictifs et des agents IA orchestrés.
+        Je recherche un stage de 4 mois en Data/IA à partir d'avril 2027.
+      </p>
+      <ul class="links">
+        <li><a href="https://github.com/Landzi123" target="_blank" rel="noopener">GitHub : Landzi123</a></li>
+        <li><a href="https://www.linkedin.com/in/alexandre-lartigue" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="mailto:alexandrelartigue@netcourrier.com">alexandrelartigue@netcourrier.com</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <div id="sections"></div>
+
+  <section class="section" id="contact">
+    <div class="wrap">
+      <div class="section-head"><span class="bar" aria-hidden="true"></span><h2>Contact</h2></div>
+      <ul class="contact-list">
+        <li><span class="lab">E-mail</span><a href="mailto:alexandrelartigue@netcourrier.com">alexandrelartigue@netcourrier.com</a></li>
+        <li><span class="lab">LinkedIn</span><a href="https://www.linkedin.com/in/alexandre-lartigue" target="_blank" rel="noopener">linkedin.com/in/alexandre-lartigue</a></li>
+        <li><span class="lab">GitHub</span><a href="https://github.com/Landzi123" target="_blank" rel="noopener">github.com/Landzi123</a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<dialog id="lightbox" aria-label="Image agrandie">
+  <div class="lb-bar"><button type="button" class="lb-close" id="lb-close">Fermer</button></div>
+  <div class="lb-scroll"><img id="lb-img" alt=""></div>
+</dialog>
+
+<footer>
+  <div class="wrap">© 2026 Alexandre Lartigue</div>
+</footer>
+
+<script>
+/* ==========================================================================
+   CONFIGURATION DU PORTFOLIO
+   --------------------------------------------------------------------------
+   Pour ajouter un projet : copie un bloc { ... } dans le tableau "projects"
+   de la section voulue, puis remplis :
+     - image  : chemin de l'image du projet, à déposer dans le dossier images/
+                (ex. "images/mon-projet.webp"). Laisse "" pour afficher un cadre vide.
+     - github : lien du dépôt GitHub (ex. "https://github.com/Landzi123/mon-repo").
+                Les workflows n8n partagent le dépôt n8n-workflows.
+                Laisse "" tant que le dépôt n'est pas en ligne.
+   Pour ajouter une section : copie un bloc de SECTIONS (id unique, titre, sous-titre).
+   ========================================================================== */
+
+const SECTIONS = [
+  {
+    id: "data",
+    title: "Data",
+    subtitle: "Traitement de données, analyse et modèles prédictifs.",
+    projects: [
+      /* Exemple de projet à ajouter ici :
+      {
+        title: "Prédiction immobilière (Kaggle Housing)",
+        summary: "…",
+        highlights: ["…", "…"],
+        stack: ["Python", "Pandas", "Scikit-Learn"],
+        image: "images/housing.png",
+        imageAlt: "…",
+        github: "https://github.com/Landzi123/…"
+      } */
+    ]
+  },
+  {
+    id: "ia",
+    title: "IA & Automatisation",
+    subtitle: "Agents IA et workflows n8n.",
+    projects: [
+      {
+        title: "Assistant personnel IA",
+        summary:
+          "Un assistant que je pilote depuis Telegram, par texte ou par note vocale. Un agent principal comprend la demande, puis la confie au sous-agent adapté : e-mails, agenda, tâches ou compte rendu de réunion.",
+        highlights: [
+          "Les notes vocales sont transcrites avec Whisper (Groq) avant d'arriver à l'agent.",
+          "Quatre sous-agents indépendants, appelés comme des sous-workflows n8n : Gmail, Google Calendar, Todoist et comptes rendus de réunion.",
+          "Compte rendu structuré généré à partir d'un enregistrement audio, avec transcription AssemblyAI.",
+          "Mémoire de conversation par utilisateur et confirmation demandée avant toute suppression ou tout envoi."
+        ],
+        stack: ["n8n", "OpenRouter", "DeepSeek", "Telegram", "Groq Whisper", "AssemblyAI", "Gmail", "Google Calendar", "Todoist"],
+        image: "images/assistant.webp",
+        imageAlt: "Capture d'écran du workflow n8n de l'assistant : déclencheur Telegram, détection des notes vocales, agent Manager et sous-agents e-mail, agenda, tâches et compte rendu",
+        github: "https://github.com/Landzi123/n8n-workflows"
+      },
+      {
+        title: "Système de recherche d'emploi IA",
+        summary:
+          "Un système n8n qui cherche les offres à ma place. Il tourne deux fois par jour, récupère les nouvelles annonces, les range dans un Google Sheet et m'envoie un récap sur Telegram.",
+        highlights: [
+          "Scraping multi-sources (Indeed et LinkedIn) via l'API Apify, avec normalisation des champs.",
+          "Dédoublonnage par titre et entreprise contre les offres déjà enregistrées.",
+          "Filtrage et scoring des offres par IA, puis adaptation du CV par un agent LLM avec calcul d'un score ATS.",
+          "Récap rédigé par un LLM et envoyé sur Telegram : nombre d'offres, meilleures offres, lien vers le Sheet."
+        ],
+        stack: ["n8n", "Apify", "Indeed", "LinkedIn", "Google Sheets", "OpenRouter", "DeepSeek", "Telegram"],
+        image: "images/emploi.webp",
+        imageAlt: "Capture d'écran du workflow n8n de recherche d'offres : planification, scrapers Indeed et LinkedIn, dédoublonnage, Google Sheets, récap IA et envoi Telegram",
+        github: "https://github.com/Landzi123/n8n-workflows"
+      }
+    ]
+  }
+  /* Exemple de nouvelle section :
+  ,{
+    id: "algo",
+    title: "Algorithmie & Jeux",
+    subtitle: "…",
+    projects: []
+  } */
+];
+
+/* ==========================================================================
+   RENDU
+   ========================================================================== */
+
+const GITHUB_ICON = "M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z";
+
+function el(tag, attrs, children) {
+  const node = document.createElement(tag);
+  Object.entries(attrs || {}).forEach(([k, v]) => {
+    if (k === "class") node.className = v;
+    else if (k === "text") node.textContent = v;
+    else node.setAttribute(k, v);
+  });
+  (children || []).forEach((c) => c && node.appendChild(c));
+  return node;
+}
+
+function githubIcon() {
+  const ns = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(ns, "svg");
+  svg.setAttribute("viewBox", "0 0 16 16");
+  svg.setAttribute("aria-hidden", "true");
+  const p = document.createElementNS(ns, "path");
+  p.setAttribute("d", GITHUB_ICON);
+  svg.appendChild(p);
+  return svg;
+}
+
+function renderFigure(project) {
+  const fig = el("figure", { class: "figure" });
+  const src = project.image || "";
+  const placeholder = () => el("div", { class: "ph", role: "img", "aria-label": "Image du projet à ajouter", text: "Image du projet" });
+  if (!src) {
+    fig.appendChild(placeholder());
+    return fig;
+  }
+  const alt = project.imageAlt || project.title;
+  const img = el("img", { src, alt, loading: "lazy" });
+  const btn = el("button", { class: "zoom", type: "button", "aria-label": "Agrandir l'image : " + project.title }, [img]);
+  btn.addEventListener("click", () => openLightbox(src, alt));
+  img.addEventListener("error", () => { fig.replaceChildren(placeholder()); });
+  fig.appendChild(btn);
+  fig.appendChild(el("figcaption", { text: "Cliquer sur l'image pour l'agrandir." }));
+  return fig;
+}
+
+const lightbox = document.getElementById("lightbox");
+function openLightbox(src, alt) {
+  document.getElementById("lb-img").src = src;
+  document.getElementById("lb-img").alt = alt;
+  lightbox.showModal();
+}
+document.getElementById("lb-close").addEventListener("click", () => lightbox.close());
+lightbox.addEventListener("click", (e) => { if (e.target === lightbox) lightbox.close(); });
+
+function renderProject(project) {
+  const body = el("div", { class: "body" });
+  body.appendChild(el("h3", { text: project.title }));
+  if (project.summary) body.appendChild(el("p", { class: "summary", text: project.summary }));
+  if (project.highlights && project.highlights.length) {
+    body.appendChild(el("ul", {}, project.highlights.map((h) => el("li", { text: h }))));
+  }
+  if (project.stack && project.stack.length) {
+    body.appendChild(el("p", { class: "stack" }, [
+      el("span", { class: "lab", text: "Stack" }),
+      document.createTextNode(project.stack.join(", "))
+    ]));
+  }
+  const actions = el("div", { class: "actions" });
+  if (project.github) {
+    const a = el("a", { class: "btn", href: project.github, target: "_blank", rel: "noopener" });
+    a.appendChild(githubIcon());
+    a.appendChild(document.createTextNode("Code sur GitHub"));
+    a.setAttribute("aria-label", "Code sur GitHub : " + project.title);
+    actions.appendChild(a);
+  } else {
+    const s = el("span", { class: "btn", "aria-disabled": "true" });
+    s.appendChild(githubIcon());
+    s.appendChild(document.createTextNode("Dépôt bientôt disponible"));
+    actions.appendChild(s);
+  }
+  body.appendChild(actions);
+  return el("article", { class: "project" }, [renderFigure(project), body]);
+}
+
+function renderSection(section) {
+  const head = el("div", { class: "section-head" }, [
+    el("span", { class: "bar", "aria-hidden": "true" }),
+    el("h2", { text: section.title })
+  ]);
+  const list = el("div", { class: "projects" });
+  if (section.projects && section.projects.length) {
+    section.projects.forEach((p) => list.appendChild(renderProject(p)));
+  } else {
+    list.appendChild(el("p", { class: "empty", text: "Projets à venir." }));
+  }
+  const wrap = el("div", { class: "wrap" }, [head]);
+  if (section.subtitle) wrap.appendChild(el("p", { class: "section-sub", text: section.subtitle }));
+  wrap.appendChild(list);
+  return el("section", { class: "section", id: section.id }, [wrap]);
+}
+
+const sectionsRoot = document.getElementById("sections");
+const nav = document.getElementById("nav");
+SECTIONS.forEach((s) => {
+  sectionsRoot.appendChild(renderSection(s));
+  nav.appendChild(el("a", { href: "#" + s.id, text: s.title }));
+});
+nav.appendChild(el("a", { href: "#contact", text: "Contact" }));
+</script>
+</body>
+</html>
