@@ -263,6 +263,21 @@ const SECTIONS = [
     title: "Data",
     subtitle: "Traitement de données, analyse et modèles prédictifs.",
     projects: [
+      {
+        title: "Prédiction de prix Airbnb",
+        summary:
+          "Projet en binôme (avec Guilhem Le Du) : prédire le prix d'annonces Airbnb (log_price) à partir d'un pipeline complet, de l'exploration des données jusqu'à la comparaison de modèles.",
+        highlights: [
+          "Exploration et visualisation : distribution des prix, carte géographique des annonces, prix selon le type de logement et la capacité d'accueil.",
+          "Nettoyage et feature engineering : imputation des valeurs manquantes, encodage des variables catégorielles, création de variables (nombre d'équipements, ancienneté de l'hôte...).",
+          "Recherche d'hyperparamètres par RandomizedSearchCV puis validation croisée à 3 plis pour comparer Random Forest et HistGradientBoosting de façon fiable.",
+          "Meilleur modèle : HistGradientBoostingRegressor, RMSE ramené de 0,44 (version initiale) à environ 0,40."
+        ],
+        stack: ["Python", "Pandas", "NumPy", "Scikit-Learn", "Matplotlib", "Seaborn"],
+        image: "images/airbnb.webp",
+        imageAlt: "Carte géographique des annonces Airbnb du jeu de données, colorée selon le prix (log_price)",
+        github: ""
+      }
       /* Exemple de projet à ajouter ici :
       {
         title: "Prédiction immobilière (Kaggle Housing)",
